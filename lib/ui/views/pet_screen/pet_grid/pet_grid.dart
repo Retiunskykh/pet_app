@@ -5,10 +5,13 @@ import 'package:flutter/material.dart';
 class PetGrid extends StatelessWidget {
   final List<Pet> petList;
   final Function(Pet) onPetTap;
+  final Function(Pet)? savePet;
 
   const PetGrid({
+    super.key,
     required this.petList,
     required this.onPetTap,
+    this.savePet,
   });
 
   @override
@@ -26,6 +29,7 @@ class PetGrid extends StatelessWidget {
         return PetItem(
           pet: petList[index],
           onPetTap: onPetTap,
+          savePet: savePet,
         );
       },
     );

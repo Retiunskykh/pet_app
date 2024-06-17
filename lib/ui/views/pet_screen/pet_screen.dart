@@ -4,6 +4,7 @@ import 'package:adopt_a_pet/extensions/location_extensions.dart';
 import 'package:adopt_a_pet/presentation/bloc/pet_screen_bloc.dart';
 import 'package:adopt_a_pet/presentation/events/pet_screen/get_list_by_name_pet_screen_event.dart';
 import 'package:adopt_a_pet/presentation/events/pet_screen/get_list_pet_screen_event.dart';
+import 'package:adopt_a_pet/presentation/events/pet_screen/save_pet_screen_event.dart';
 import 'package:adopt_a_pet/presentation/states/pet_screen_state.dart';
 import 'package:adopt_a_pet/ui/dialog_service.dart';
 import 'package:adopt_a_pet/ui/views/pet_info_screen/pet_info_screen.dart';
@@ -12,6 +13,7 @@ import 'package:adopt_a_pet/ui/views/pet_screen/location_widget.dart';
 import 'package:adopt_a_pet/ui/views/pet_screen/pet_grid/pet_grid.dart';
 import 'package:adopt_a_pet/ui/views/pet_screen/pet_search_bar.dart';
 import 'package:adopt_a_pet/ui/views/pet_screen/pet_type_list/pet_type_list.dart';
+import 'package:adopt_a_pet/ui/widgets/custom_bottom_navigation_bar.dart';
 import 'package:adopt_a_pet/ui/widgets/text/body2_text.dart';
 import 'package:adopt_a_pet/ui/widgets/text/h2_text.dart';
 import 'package:adopt_a_pet/enum/data_loading_state.dart';
@@ -43,7 +45,15 @@ class PetScreen extends StatelessWidget {
     return Expanded(
       child: PetGrid(
         petList: state.petList!,
-        onPetTap: (pet) => navigateToPetInfoPage(context, pet),
+        onPetTap: (pet) => navigateToPetInfoPage(
+          context,
+          pet,
+        ),
+        savePet: (pet) => _petScreenBloc.add(
+          SavePetScreenEvent(
+            pet: pet,
+          ),
+        ),
       ),
     );
   }
@@ -97,84 +107,89 @@ class PetScreen extends StatelessWidget {
       ),
     );
 
-    return SafeArea(
-      child: BlocBuilder<PetScreenBloc, PetScreenState>(
-        builder: (context, state) {
-          return Padding(
-            padding: const EdgeInsets.only(top: 16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                  child: LocationWidget(
-                    selectedLocation: state.selectedLocation,
-                    onTap: () => DialogService.showAlertDialog(
-                      context: context,
-                      dialog: LocationDialog(
-                        selectedLocation: state.selectedLocation,
-                        onLocationSelected: (location) => _petScreenBloc.add(
-                          GetListPetScreenEvent(
-                            page: 1,
-                            location: location,
+    return Scaffold(
+      bottomNavigationBar: const CustomBottomNavigationBar(
+        currentPageIndex: 0,
+      ),
+      body: SafeArea(
+        child: BlocBuilder<PetScreenBloc, PetScreenState>(
+          builder: (context, state) {
+            return Padding(
+              padding: const EdgeInsets.only(top: 16.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                    child: LocationWidget(
+                      selectedLocation: state.selectedLocation,
+                      onTap: () => DialogService.showAlertDialog(
+                        context: context,
+                        dialog: LocationDialog(
+                          selectedLocation: state.selectedLocation,
+                          onLocationSelected: (location) => _petScreenBloc.add(
+                            GetListPetScreenEvent(
+                              page: 1,
+                              location: location,
+                            ),
                           ),
+                          onSearchButtonTap: (location) => {},
+                          locationList: LocationExtensions.locationList(),
                         ),
-                        onSearchButtonTap: (location) => {},
-                        locationList: LocationExtensions.locationList(),
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 18.0),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                  child: PetSearchBar(
-                    height: 48.0,
-                    onSearchButtonTap: (name) => _onSearch(name),
-                  ),
-                ),
-                const SizedBox(height: 16.0),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                  child: H2Text(
-                    text: "Pet Categories",
-                    textColor: const Color(0xFF5F5B5B),
-                  ),
-                ),
-                const SizedBox(
-                  height: 8.0,
-                ),
-                PetTypeList(
-                  categoryList: const [
-                    PetType.dog,
-                    PetType.cat,
-                    PetType.bird,
-                    PetType.rabbit,
-                    PetType.smallAndFurry,
-                  ],
-                  onPetTypeTap: (petType) => _petScreenBloc.add(
-                    GetListPetScreenEvent(
-                      page: 1,
-                      petType: petType,
+                  const SizedBox(height: 18.0),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                    child: PetSearchBar(
+                      height: 48.0,
+                      onSearchButtonTap: (name) => _onSearch(name),
                     ),
                   ),
-                  selectedPetType: state.selectedPetType,
-                ),
-                const SizedBox(height: 24.0),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                  child: H2Text(
-                    text: "Adopt a pet",
-                    textColor: const Color(0xFF5F5B5B),
+                  const SizedBox(height: 16.0),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                    child: H2Text(
+                      text: "Pet Categories",
+                      textColor: const Color(0xFF5F5B5B),
+                    ),
                   ),
-                ),
-                const SizedBox(height: 8.0),
-                _createContent(context, state),
-              ],
-            ),
-          );
-        },
+                  const SizedBox(
+                    height: 8.0,
+                  ),
+                  PetTypeList(
+                    categoryList: const [
+                      PetType.dog,
+                      PetType.cat,
+                      PetType.bird,
+                      PetType.rabbit,
+                      PetType.smallAndFurry,
+                    ],
+                    onPetTypeTap: (petType) => _petScreenBloc.add(
+                      GetListPetScreenEvent(
+                        page: 1,
+                        petType: petType,
+                      ),
+                    ),
+                    selectedPetType: state.selectedPetType,
+                  ),
+                  const SizedBox(height: 24.0),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                    child: H2Text(
+                      text: "Adopt a pet",
+                      textColor: const Color(0xFF5F5B5B),
+                    ),
+                  ),
+                  const SizedBox(height: 8.0),
+                  _createContent(context, state),
+                ],
+              ),
+            );
+          },
+        ),
       ),
     );
   }
@@ -188,7 +203,10 @@ class PetScreen extends StatelessWidget {
     );
   }
 
-  void navigateToPetInfoPage(BuildContext context, Pet pet) {
+  void navigateToPetInfoPage(
+    BuildContext context,
+    Pet pet,
+  ) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) {

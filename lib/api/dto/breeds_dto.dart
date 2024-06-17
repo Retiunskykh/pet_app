@@ -19,4 +19,13 @@ class BreedsDto {
       unknown: json['unknown'],
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'primary': primary,
+      'secondary': secondary,
+      'mixed': mixed,
+      'unknown': unknown,
+    };
+  }
 }

@@ -1,4 +1,4 @@
-import 'package:adopt_a_pet/api/services/dto/organization_dto.dart';
+import 'package:adopt_a_pet/api/dto/organization_dto.dart';
 import 'package:adopt_a_pet/data/models/organization.dart';
 
 extension OrganizationDtoExtensions on OrganizationDto {

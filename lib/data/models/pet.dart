@@ -6,7 +6,6 @@ import 'package:adopt_a_pet/data/models/environment.dart';
 import 'package:adopt_a_pet/data/models/pet_colors.dart';
 import 'package:adopt_a_pet/data/models/photo.dart';
 
-
 class Pet {
   final int id;
   final String organizationId;

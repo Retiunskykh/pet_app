@@ -1,4 +1,4 @@
-import 'package:adopt_a_pet/api/services/dto/environment_dto.dart';
+import 'package:adopt_a_pet/api/dto/environment_dto.dart';
 import 'package:adopt_a_pet/data/models/environment.dart';
 
 extension EnvironmentDtoExtensions on EnvironmentDto {

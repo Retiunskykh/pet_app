@@ -1,4 +1,4 @@
-import 'package:adopt_a_pet/api/services/dto/pet_colors_dto.dart';
+import 'package:adopt_a_pet/api/dto/pet_colors_dto.dart';
 import 'package:adopt_a_pet/data/models/pet_colors.dart';
 
 extension PetColorsDtoExtensions on PetColorsDto {

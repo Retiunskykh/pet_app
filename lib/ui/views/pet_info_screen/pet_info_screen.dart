@@ -82,97 +82,93 @@ class PetInfoScreen extends StatelessWidget {
 
     return Scaffold(
       body: SafeArea(
-        child: BlocBuilder<PetInfoScreenBloc, PetInfoScreenState>(builder: (context, state) {
-          return Stack(
-            alignment: Alignment.topCenter,
-            children: [
-              pet.primaryPhotoCropped?.large == null
-                  ? SizedBox(
-                      height: imageHeight,
-                      child: const Icon(
-                        Icons.image_not_supported_outlined,
-                        color: Color(0x805F5B5B),
-                        size: 48.0,
+        child: BlocBuilder<PetInfoScreenBloc, PetInfoScreenState>(
+          builder: (context, state) {
+            return Stack(
+              alignment: Alignment.topCenter,
+              children: [
+                pet.primaryPhotoCropped?.large == null
+                    ? SizedBox(
+                        height: imageHeight,
+                        child: const Icon(
+                          Icons.image_not_supported_outlined,
+                          color: Color(0x805F5B5B),
+                          size: 48.0,
+                        ),
+                      )
+                    : Image.network(
+                        pet.primaryPhotoCropped!.large,
+                        fit: BoxFit.cover,
+                        height: imageHeight,
                       ),
-                    )
-                  : Image.network(
-                      pet.primaryPhotoCropped!.large,
-                      fit: BoxFit.cover,
-                      height: imageHeight,
-                      width: MediaQuery.of(context).size.width,
-                    ),
-              Padding(
-                padding: EdgeInsets.only(top: imageHeight - 40),
-                child: SizedBox.expand(
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(40),
-                        topRight: Radius.circular(40),
+                Padding(
+                  padding: EdgeInsets.only(top: imageHeight - 40),
+                  child: SizedBox.expand(
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(40),
+                          topRight: Radius.circular(40),
+                        ),
+                        color: Colors.white,
                       ),
-                      color: Colors.white,
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                        top: 36,
-                        left: 24,
-                        right: 24,
-                        bottom: 24,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          H1Text(
-                            text: pet.name,
-                            textColor: const Color(0xFF5F5B5B),
-                          ),
-                          pet.contact.address.city == null
-                              ? const SizedBox()
-                              : Padding(
-                                  padding: const EdgeInsets.only(top: 4.0),
-                                  child: Row(
-                                    children: [
-                                      SvgPicture.asset(
-                                        'assets/vectors/ic_location.svg',
-                                      ),
-                                      Body3Text(
-                                        text: pet.contact.address.city!,
-                                        textColor: const Color(0x805F5B5B),
-                                      ),
-                                    ],
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(24, 36, 24, 24),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            H1Text(
+                              text: pet.name,
+                              textColor: const Color(0xFF5F5B5B),
+                            ),
+                            pet.contact.address.city == null
+                                ? const SizedBox()
+                                : Padding(
+                                    padding: const EdgeInsets.only(top: 4.0),
+                                    child: Row(
+                                      children: [
+                                        SvgPicture.asset(
+                                          'assets/vectors/ic_location.svg',
+                                        ),
+                                        Body3Text(
+                                          text: pet.contact.address.city!,
+                                          textColor: const Color(0x805F5B5B),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                          const SizedBox(
-                            height: 16,
-                          ),
-                          PetInfoGroup(
-                            gender: pet.gender,
-                            age: pet.age,
-                            size: pet.size,
-                            breed: pet.breeds.primary,
-                          ),
-                          const SizedBox(
-                            height: 24,
-                          ),
-                          _createOrganizationContent(context, state),
-                          pet.description == null
-                              ? const SizedBox()
-                              : Padding(
-                                  padding: const EdgeInsets.only(top: 24),
-                                  child: Body3Text(
-                                    text: pet.description!,
-                                    textColor: const Color(0xFFC2C2C2),
+                            const SizedBox(
+                              height: 16,
+                            ),
+                            PetInfoGroup(
+                              gender: pet.gender,
+                              age: pet.age,
+                              size: pet.size,
+                              breed: pet.breeds.primary,
+                            ),
+                            const SizedBox(
+                              height: 24,
+                            ),
+                            _createOrganizationContent(context, state),
+                            pet.description == null
+                                ? const SizedBox()
+                                : Padding(
+                                    padding: const EdgeInsets.only(top: 24),
+                                    child: Body3Text(
+                                      text: pet.description!,
+                                      textColor: const Color(0xFFC2C2C2),
+                                    ),
                                   ),
-                                )
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          );
-        }),
+              ],
+            );
+          },
+        ),
       ),
       backgroundColor: Colors.white,
     );

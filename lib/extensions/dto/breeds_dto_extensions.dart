@@ -1,4 +1,4 @@
-import 'package:adopt_a_pet/api/services/dto/breeds_dto.dart';
+import 'package:adopt_a_pet/api/dto/breeds_dto.dart';
 import 'package:adopt_a_pet/data/models/breeds.dart';
 
 extension BreedsDtoExtensions on BreedsDto {

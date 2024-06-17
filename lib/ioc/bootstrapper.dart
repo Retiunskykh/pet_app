@@ -1,11 +1,17 @@
 import 'package:adopt_a_pet/api/base/dio_request_service.dart';
 import 'package:adopt_a_pet/api/base/request_service.dart';
+import 'package:adopt_a_pet/api/services/base/firebase_service_base.dart';
+import 'package:adopt_a_pet/api/services/base/firestore_service_base.dart';
 import 'package:adopt_a_pet/api/services/base/oraganization_api_service_base.dart';
 import 'package:adopt_a_pet/api/services/base/pet_list_api_service_base.dart';
+import 'package:adopt_a_pet/api/services/firebase_service.dart';
+import 'package:adopt_a_pet/api/services/firestore_service.dart';
 import 'package:adopt_a_pet/api/services/organization_api_service.dart';
 import 'package:adopt_a_pet/api/services/pet_list_api_service.dart';
+import 'package:adopt_a_pet/data/managers/base/firestore_manager_base.dart';
 import 'package:adopt_a_pet/data/managers/base/organization_manager_base.dart';
 import 'package:adopt_a_pet/data/managers/base/pet_manager_base.dart';
+import 'package:adopt_a_pet/data/managers/firestore_manager.dart';
 import 'package:adopt_a_pet/data/managers/organization_manager.dart';
 import 'package:adopt_a_pet/data/managers/pet_manager.dart';
 import 'package:adopt_a_pet/ioc/simple_ioc_container.dart';
@@ -24,6 +30,10 @@ final class Bootstrapper {
 
     SimpleIoCContainer.register<OrganizationApiServiceBase, OrganizationApiService>(
         OrganizationApiService(SimpleIoCContainer.resolve<RequestService>()));
+
+    SimpleIoCContainer.register<FirebaseServiceBase, FirebaseService>(FirebaseService());
+
+    SimpleIoCContainer.register<FirestoreServiceBase, FirestoreService>(FirestoreService());
   }
 
   static void _registerManagers() {
@@ -32,5 +42,8 @@ final class Bootstrapper {
 
     SimpleIoCContainer.register<OrganizationManagerBase, OrganizationManager>(
         OrganizationManager(SimpleIoCContainer.resolve<OrganizationApiServiceBase>()));
+
+    SimpleIoCContainer.register<FirestoreManagerBase, FirestoreManager>(
+        FirestoreManager(SimpleIoCContainer.resolve<FirestoreServiceBase>()));
   }
 }

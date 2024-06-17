@@ -1,4 +1,4 @@
-import 'package:adopt_a_pet/api/services/dto/contact_dto.dart';
+import 'package:adopt_a_pet/api/dto/contact_dto.dart';
 import 'package:adopt_a_pet/data/models/contact.dart';
 import 'package:adopt_a_pet/extensions/dto/address_dto_extensions.dart';
 

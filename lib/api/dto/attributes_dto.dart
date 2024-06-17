@@ -22,4 +22,14 @@ class AttributesDto {
       shotsCurrent: json['shots_current'],
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'spayed_neutered': spayedNeutered,
+      'house_trained': houseTrained,
+      'declawed': declawed,
+      'special_needs': specialNeeds,
+      'shots_current': shotsCurrent,
+    };
+  }
 }

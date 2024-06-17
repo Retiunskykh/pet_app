@@ -1,5 +1,5 @@
 import 'package:adopt_a_pet/api/base/request_service.dart';
-import 'package:adopt_a_pet/api/services/dto/pet_dto.dart';
+import 'package:adopt_a_pet/api/dto/pet_dto.dart';
 import 'package:adopt_a_pet/api/services/base/pet_list_api_service_base.dart';
 import 'package:adopt_a_pet/constants.dart';
 import 'package:adopt_a_pet/enum/http_method.dart';

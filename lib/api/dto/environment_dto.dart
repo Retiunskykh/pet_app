@@ -16,4 +16,12 @@ class EnvironmentDto {
       cats: json['cats'],
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'children': children,
+      'dogs': dogs,
+      'cats': cats,
+    };
+  }
 }

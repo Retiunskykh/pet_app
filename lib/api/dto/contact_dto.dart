@@ -18,4 +18,12 @@ class ContactDto {
       address: AddressDto.fromJson(json['address']),
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'email': email,
+      'phone': phone,
+      'address': address.toJson(),
+    };
+  }
 }

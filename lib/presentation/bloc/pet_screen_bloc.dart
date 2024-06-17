@@ -1,21 +1,33 @@
 import 'dart:async';
+import 'package:adopt_a_pet/data/managers/base/firestore_manager_base.dart';
 import 'package:adopt_a_pet/data/managers/base/pet_manager_base.dart';
 import 'package:adopt_a_pet/ioc/simple_ioc_container.dart';
 import 'package:adopt_a_pet/presentation/events/pet_screen/get_list_by_name_pet_screen_event.dart';
 import 'package:adopt_a_pet/presentation/events/pet_screen/get_list_pet_screen_event.dart';
 import 'package:adopt_a_pet/presentation/events/pet_screen/pet_screen_event.dart';
+import 'package:adopt_a_pet/presentation/events/pet_screen/save_pet_screen_event.dart';
 import 'package:adopt_a_pet/presentation/states/pet_screen_state.dart';
 import 'package:adopt_a_pet/enum/data_loading_state.dart';
 import 'package:bloc/bloc.dart';
 
 class PetScreenBloc extends Bloc<PetScreenEvent, PetScreenState> {
   late PetManagerBase _petManager;
+  late FirestoreManagerBase _firestoreManagerBase;
 
   PetScreenBloc() : super(PetScreenState.createInitial()) {
     _petManager = SimpleIoCContainer.resolve<PetManagerBase>();
+    _firestoreManagerBase = SimpleIoCContainer.resolve<FirestoreManagerBase>();
 
     on<GetListPetScreenEvent>(_onGetListPetScreenEvent);
     on<GetListByNamePetScreenEvent>(_onGetListByNamePetScreenEvent);
+    on<SavePetScreenEvent>(_onSavePetScreenEvent);
+  }
+
+  FutureOr<void> _onSavePetScreenEvent(
+    SavePetScreenEvent event,
+    Emitter<PetScreenState> emit,
+  ) {
+    _firestoreManagerBase.savePet(event.pet);
   }
 
   FutureOr<void> _onGetListPetScreenEvent(

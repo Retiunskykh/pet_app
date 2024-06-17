@@ -1,6 +1,6 @@
-import 'package:adopt_a_pet/api/services/dto/attributes_dto.dart';
-import 'package:adopt_a_pet/api/services/dto/contact_dto.dart';
-import 'package:adopt_a_pet/api/services/dto/photo_dto.dart';
+import 'package:adopt_a_pet/api/dto/attributes_dto.dart';
+import 'package:adopt_a_pet/api/dto/contact_dto.dart';
+import 'package:adopt_a_pet/api/dto/photo_dto.dart';
 
 import 'breeds_dto.dart';
 import 'pet_colors_dto.dart';
@@ -58,13 +58,31 @@ class PetDto {
       environment: EnvironmentDto.fromJson(json['environment']),
       name: json['name'],
       description: json['description'],
-      primaryPhotoCropped: json['primary_photo_cropped'] == null
-          ? null
-          : PhotoDto.fromJson(
-              json['primary_photo_cropped'],
-            ),
+      primaryPhotoCropped:
+          json['primary_photo_cropped'] == null ? null : PhotoDto.fromJson(json['primary_photo_cropped']),
       publishedAt: json['published_at'],
       contact: ContactDto.fromJson(json['contact']),
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'organization_id': organizationId,
+      'type': type,
+      'species': species,
+      'breeds': breeds.toJson(),
+      'colors': colors.toJson(),
+      'age': age,
+      'gender': gender,
+      'size': size,
+      'attributes': attributes.toJson(),
+      'environment': environment.toJson(),
+      'name': name,
+      'description': description,
+      'primary_photo_cropped': primaryPhotoCropped?.toJson(),
+      'published_at': publishedAt,
+      'contact': contact.toJson(),
+    };
   }
 }

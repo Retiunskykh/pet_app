@@ -19,4 +19,13 @@ class PhotoDto {
       full: json['full'],
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'small': small,
+      'medium': medium,
+      'large': large,
+      'full': full,
+    };
+  }
 }

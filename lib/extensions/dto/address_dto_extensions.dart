@@ -1,4 +1,4 @@
-import 'package:adopt_a_pet/api/services/dto/address_dto.dart';
+import 'package:adopt_a_pet/api/dto/address_dto.dart';
 import 'package:adopt_a_pet/data/models/address.dart';
 
 extension AddressDtoExtensions on AddressDto {
